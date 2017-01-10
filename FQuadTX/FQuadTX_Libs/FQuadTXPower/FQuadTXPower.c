@@ -11,7 +11,7 @@
 
 FStatus FQuadTXPower_Init()
 {
-	FStatus status = FStatusFailed;
+	FStatus status = FStatus_Failed;
 	PlatformStatus platformStatus;
 	
 	// Power off all peripherals, they will be powered on when needed
@@ -22,35 +22,35 @@ FStatus FQuadTXPower_Init()
 	platformStatus = PlatformGPIO_Configure( FQuadTXGPIO_PowerHold, PlatformGPIOConfig_Output );
 	require_noerr( platformStatus, exit );
 	
-	status = FStatusSuccess;
+	status = FStatus_Success;
 exit:
 	return status;
 }
 
 FStatus FQuadTXPower_Hold()
 {
-	FStatus status = FStatusFailed;
+	FStatus status = FStatus_Failed;
 	PlatformStatus platformStatus;
 	
 	// Hold power on in order to stay alive
 	platformStatus = PlatformGPIO_OutputHigh( FQuadTXGPIO_PowerHold );
 	require_noerr( platformStatus, exit );
 		
-	status = FStatusSuccess;
+	status = FStatus_Success;
 exit:
 	return status;
 }
 
 FStatus FQuadTXPower_Release()
 {
-	FStatus status = FStatusFailed;
+	FStatus status = FStatus_Failed;
 	PlatformStatus platformStatus;
 		
 	// Release power hold, which will turn this MCU off when the user releases the on button
 	platformStatus = PlatformGPIO_OutputLow( FQuadTXGPIO_PowerHold );
 	require_noerr( platformStatus, exit );
 		
-	status = FStatusSuccess;
+	status = FStatus_Success;
 exit:
 	return status;
 }

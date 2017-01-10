@@ -10,6 +10,7 @@
 #include "FQuadTXLogging.h"
 #include "require_macros.h"
 #include "FQuadTXPower.h"
+#include "FQuadTXLED.h"
 #include <util/delay.h>
 #include <stdlib.h>
 #include <avr/io.h>
@@ -17,11 +18,6 @@
 int main(void)
 {
 	FStatus status;
-	
-	// TEMP
-	status = PlatformGPIO_Configure(FQuadTXGPIO_GreenLED, PlatformGPIOConfig_Output );
-	require_noerr( status, exit );
-	//
 	
 	// Initialize power
 	status = FQuadTXPower_Init();
@@ -31,19 +27,23 @@ int main(void)
 	status = FQuadTXPower_Hold();
 	require_noerr( status, exit );
 	
+	// Initilize LED indicator
+	status = FQuadTXLED_Init();
+	require_noerr( status, exit );
+	
     while(1)
     {	
 		// Test GPIO
-		status = PlatformGPIO_Toggle( FQuadTXGPIO_GreenLED );
+		status = FQuadTXLED_Toggle();
 		require_noerr( status, exit );
 		
-		_delay_ms( 500 );
+		_delay_ms( 1000 );
     }
 	
 exit:
 	while ( 1 )
 	{
-		PlatformGPIO_Toggle( FQuadTXGPIO_GreenLED );
+		FQuadTXLED_Toggle();
 		_delay_ms( 100 );
 	}
 }
