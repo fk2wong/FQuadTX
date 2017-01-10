@@ -69,57 +69,66 @@
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <ToolchainSettings>
       <AvrGcc>
-        <avrgcc.common.outputfiles.hex>True</avrgcc.common.outputfiles.hex>
-        <avrgcc.common.outputfiles.lss>True</avrgcc.common.outputfiles.lss>
-        <avrgcc.common.outputfiles.eep>True</avrgcc.common.outputfiles.eep>
-        <avrgcc.common.outputfiles.srec>True</avrgcc.common.outputfiles.srec>
-        <avrgcc.common.outputfiles.usersignatures>False</avrgcc.common.outputfiles.usersignatures>
-        <avrgcc.compiler.general.ChangeDefaultCharTypeUnsigned>True</avrgcc.compiler.general.ChangeDefaultCharTypeUnsigned>
-        <avrgcc.compiler.general.ChangeDefaultBitFieldUnsigned>True</avrgcc.compiler.general.ChangeDefaultBitFieldUnsigned>
-        <avrgcc.compiler.symbols.DefSymbols>
-          <ListValues>
-            <Value>DEBUG</Value>
-          </ListValues>
-        </avrgcc.compiler.symbols.DefSymbols>
-        <avrgcc.compiler.directories.IncludePaths>
-          <ListValues>
-            <Value>../Platform</Value>
-            <Value>../Platform/PlatformGPIO</Value>
-            <Value>../Platform/PlatformStatus</Value>
-            <Value>../Shared/require_macros</Value>
-            <Value>../Shared/FMemory</Value>
-            <Value>../Platform/PlatformRingBuffer</Value>
-            <Value>../Shared/FUtilities</Value>
-            <Value>../Platform/PlatformUART</Value>
-            <Value>../Platform/PlatformInterrupt</Value>
-            <Value>../Platform/PlatformPowerSave</Value>
-            <Value>../Platform/PlatformClock</Value>
-            <Value>../Platform/PlatformADC</Value>
-            <Value>../FQuad_Libs</Value>
-            <Value>../FQuad_Libs/FQuadLogging</Value>
-            <Value>../Platform/PlatformPWM</Value>
-            <Value>../Platform/PlatformI2C</Value>
-          </ListValues>
-        </avrgcc.compiler.directories.IncludePaths>
-        <avrgcc.compiler.optimization.level>Optimize (-O1)</avrgcc.compiler.optimization.level>
-        <avrgcc.compiler.optimization.PackStructureMembers>True</avrgcc.compiler.optimization.PackStructureMembers>
-        <avrgcc.compiler.optimization.AllocateBytesNeededForEnum>True</avrgcc.compiler.optimization.AllocateBytesNeededForEnum>
-        <avrgcc.compiler.optimization.DebugLevel>Default (-g2)</avrgcc.compiler.optimization.DebugLevel>
-        <avrgcc.compiler.warnings.AllWarnings>True</avrgcc.compiler.warnings.AllWarnings>
-        <avrgcc.linker.libraries.Libraries>
-          <ListValues>
-            <Value>libm</Value>
-          </ListValues>
-        </avrgcc.linker.libraries.Libraries>
-        <avrgcc.assembler.debugging.DebugLevel>Default (-Wa,-g)</avrgcc.assembler.debugging.DebugLevel>
-      </AvrGcc>
+  <avrgcc.common.outputfiles.hex>True</avrgcc.common.outputfiles.hex>
+  <avrgcc.common.outputfiles.lss>True</avrgcc.common.outputfiles.lss>
+  <avrgcc.common.outputfiles.eep>True</avrgcc.common.outputfiles.eep>
+  <avrgcc.common.outputfiles.srec>True</avrgcc.common.outputfiles.srec>
+  <avrgcc.common.outputfiles.usersignatures>False</avrgcc.common.outputfiles.usersignatures>
+  <avrgcc.compiler.general.ChangeDefaultCharTypeUnsigned>True</avrgcc.compiler.general.ChangeDefaultCharTypeUnsigned>
+  <avrgcc.compiler.general.ChangeDefaultBitFieldUnsigned>True</avrgcc.compiler.general.ChangeDefaultBitFieldUnsigned>
+  <avrgcc.compiler.symbols.DefSymbols>
+    <ListValues>
+      <Value>DEBUG</Value>
+    </ListValues>
+  </avrgcc.compiler.symbols.DefSymbols>
+  <avrgcc.compiler.directories.IncludePaths>
+    <ListValues>
+      <Value>../Platform</Value>
+      <Value>../Platform/PlatformGPIO</Value>
+      <Value>../Platform/PlatformStatus</Value>
+      <Value>../Shared/require_macros</Value>
+      <Value>../Shared/FMemory</Value>
+      <Value>../Platform/PlatformRingBuffer</Value>
+      <Value>../Shared/FUtilities</Value>
+      <Value>../Platform/PlatformUART</Value>
+      <Value>../Platform/PlatformInterrupt</Value>
+      <Value>../Platform/PlatformPowerSave</Value>
+      <Value>../Platform/PlatformClock</Value>
+      <Value>../Platform/PlatformADC</Value>
+      <Value>../Platform/PlatformPWM</Value>
+      <Value>../Platform/PlatformI2C</Value>
+      <Value>../FQuadTX_Libs</Value>
+      <Value>../FQuadTX_Libs/FQuadTXLogging</Value>
+      <Value>../Shared/FStatus</Value>
+      <Value>../FQuadTX_Libs/FQuadTXPower</Value>
+      <Value>../</Value>
+    </ListValues>
+  </avrgcc.compiler.directories.IncludePaths>
+  <avrgcc.compiler.optimization.level>Optimize (-O1)</avrgcc.compiler.optimization.level>
+  <avrgcc.compiler.optimization.PackStructureMembers>True</avrgcc.compiler.optimization.PackStructureMembers>
+  <avrgcc.compiler.optimization.AllocateBytesNeededForEnum>True</avrgcc.compiler.optimization.AllocateBytesNeededForEnum>
+  <avrgcc.compiler.optimization.DebugLevel>Default (-g2)</avrgcc.compiler.optimization.DebugLevel>
+  <avrgcc.compiler.warnings.AllWarnings>True</avrgcc.compiler.warnings.AllWarnings>
+  <avrgcc.linker.libraries.Libraries>
+    <ListValues>
+      <Value>libm</Value>
+    </ListValues>
+  </avrgcc.linker.libraries.Libraries>
+  <avrgcc.assembler.debugging.DebugLevel>Default (-Wa,-g)</avrgcc.assembler.debugging.DebugLevel>
+</AvrGcc>
     </ToolchainSettings>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="FQuadTX.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="FQuad_Libs\FQuadLogging\FQuadLogging.h">
+    <Compile Include="FQuadTX_Libs\FQuadTXLogging\FQuadTXLogging.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="FQuadTX_Libs\FQuadTXPower\FQuadTXPower.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="FQuadTX_Libs\FQuadTXPower\FQuadTXPower.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="Platform\PlatformADC\PlatformADC.c">
@@ -182,6 +191,9 @@
     <Compile Include="Shared\FMemory\FMemory.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="Shared\FStatus\FStatus.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="Shared\FUtilities\FUtilities.h">
       <SubType>compile</SubType>
     </Compile>
@@ -190,8 +202,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="FQuad_Libs" />
-    <Folder Include="FQuad_Libs\FQuadLogging" />
+    <Folder Include="FQuadTX_Libs" />
+    <Folder Include="FQuadTX_Libs\FQuadTXLogging" />
+    <Folder Include="FQuadTX_Libs\FQuadTXPower" />
     <Folder Include="Platform\PlatformI2C" />
     <Folder Include="Platform\PlatformPWM" />
     <Folder Include="Platform\PlatformADC" />
@@ -206,6 +219,7 @@
     <Folder Include="Platform\PlatformGPIO" />
     <Folder Include="Shared\FMemory" />
     <Folder Include="Shared\FUtilities" />
+    <Folder Include="Shared\FStatus" />
     <Folder Include="Shared\require_macros" />
   </ItemGroup>
   <Import Project="$(AVRSTUDIO_EXE_PATH)\\Vs\\Compiler.targets" />
