@@ -8,7 +8,7 @@
 
 
 
-#include "Platform_FQuad.h"
+#include "Platform_FQuadTX.h"
 #include "FQuadLogging.h"
 #include "require_macros.h"
 #include <util/delay.h>
@@ -23,7 +23,7 @@ int main(void)
 	status = PlatformPowerSave_PowerOffAllPeripherals();
 	require_noerr_quiet( status, exit );
 	
-	status = PlatformGPIO_InitAllGPIOs();
+	status = PlatformGPIO_Configure( FQuadTXGPIO_TestLED, PlatformGPIOConfig_Output );
 	require_noerr_quiet( status, exit );
 	
 	ringBuf = PlatformRingBuffer_Create( 32 );
@@ -32,72 +32,57 @@ int main(void)
 	status = PlatformUART_Init( 19200, ringBuf );
 	require_noerr_quiet( status, exit );
 	
-	status = PlatformPWM_Init( FQuadPWM_MotorNW, 250, NULL );
+	status = PlatformPWM_Init( FQuadTXPWM_MotorNW, 250, NULL );
 	require_noerr_quiet( status, exit );
 	
-	status = PlatformPWM_Init( FQuadPWM_MotorNE, 250, NULL );
+	status = PlatformPWM_Init( FQuadTXPWM_MotorNE, 250, NULL );
 	require_noerr_quiet( status, exit );
 	
-	status = PlatformPWM_Init( FQuadPWM_MotorSW, 250, NULL );
+	status = PlatformPWM_Init( FQuadTXPWM_MotorSW, 250, NULL );
 	require_noerr_quiet( status, exit );
 	
-	status = PlatformPWM_Init( FQuadPWM_MotorSE, 250, NULL );
+	status = PlatformPWM_Init( FQuadTXPWM_MotorSE, 250, NULL );
 	require_noerr_quiet( status, exit );
-	
-	status = PlatformI2C_Init();
-	require_noerr_quiet( status, exit );
-	
-	uint8_t MPUAddr = 0;
-	status = PlatformI2C_Read( 0x68, 0x75, &MPUAddr, 1 );
-	
-	if ( status == 0 )
-	{
-		FQUAD_DEBUG_LOG(( "MPU-6050 ADDR: 0x%x\n", MPUAddr ));
-	}
-	else
-	{
-		FQUAD_DEBUG_LOG(( "MPU-6050 Not Found!\n" ));	
-	}
 		
     while(1)
     {	
 		// Test GPIO
-		status = PlatformGPIO_Toggle( FQuadGPIO_TestLED );
+		status = PlatformGPIO_Toggle( FQuadTXGPIO_TestLED );
 		require_noerr( status, exit );
 		
 		// Test UART
-		uint8_t rxData[5];
-		status = PlatformUART_Receive( rxData, sizeof( rxData ));
-		
+		uint8_t rxData[6];
+		status = PlatformUART_Receive( rxData, sizeof( rxData ) - 1 );
+		rxData[sizeof( rxData ) - 1] = '\0';
 		if ( status == PlatformStatus_Success )
 		{
 			FQUAD_DEBUG_LOG(( "UART Received: %s.\n", rxData ));	
 		}
 		
 		// Test ADC
-		status = PlatformADC_Init( FQuadADC_PadLeftVertical );
+		status = PlatformADC_Init( FQuadTXADC_PadLeftVertical );
 		require_noerr_quiet( status, exit );
 		
 		uint16_t adcVal;
-		status = PlatformADC_Read( FQuadADC_PadLeftVertical, &adcVal );
+		status = PlatformADC_Read( FQuadTXADC_PadLeftVertical, &adcVal );
 		require_noerr( status, exit );
 		
 		FQUAD_DEBUG_LOG(( "ADC Read: %d\n", adcVal ));
 		
-		status = PlatformADC_Deinit( FQuadADC_PadLeftVertical );
+		status = PlatformADC_Deinit( FQuadTXADC_PadLeftVertical );
 		require_noerr_quiet( status, exit );
 		
 		// Test PWM outputs
-		status = PlatformPWM_Start( FQuadPWM_MotorNW, 40 );
+		status = PlatformPWM_Start( FQuadTXPWM_MotorNW, 40 );
 		require_noerr_quiet( status, exit );
 		
-		status = PlatformPWM_Start( FQuadPWM_MotorNE, 60 );
+		status = PlatformPWM_Start( FQuadTXPWM_MotorNE, 60 );
 		require_noerr_quiet( status, exit );
 		
-		status = PlatformPWM_Start( FQuadPWM_MotorSW, 20 );
+		status = PlatformPWM_Start( FQuadTXPWM_MotorSW, 20 );
 		require_noerr_quiet( status, exit );
 				
-		status = PlatformPWM_Start( FQuadPWM_MotorSE, 80 );
+		status = PlatformPWM_Start( FQuadTXPWM_MotorSE, 80 );
 		require_noerr_quiet( status, exit );
 		
 		_delay_ms( 500 );
@@ -106,7 +91,7 @@ int main(void)
 exit:
 	while ( 1 )
 	{
-		PlatformGPIO_Toggle( FQuadGPIO_TestLED );
+		PlatformGPIO_Toggle( FQuadTXGPIO_TestLED );
 		_delay_ms( 100 );
 	}
 }

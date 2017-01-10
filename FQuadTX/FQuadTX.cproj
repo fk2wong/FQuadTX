@@ -173,7 +173,7 @@
     <Compile Include="Platform\PlatformUART\PlatformUART.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Platform\Platform_FQuad.h">
+    <Compile Include="Platform_FQuadTX.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="Shared\FMemory\FMemory.c">
