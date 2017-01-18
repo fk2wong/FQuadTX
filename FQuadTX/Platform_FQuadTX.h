@@ -28,11 +28,11 @@ typedef enum
 	FQuadTXGPIO_PowerHold	= PlatformGPIO_PTB3,
 	FQuadTXGPIO_PadB		= PlatformGPIO_PTB4,
 	
-	FQuadTXADC_PadDDown		= PlatformGPIO_PTC4,
-	FQuadTXADC_PadDLeft		= PlatformGPIO_PTC5,
+	FQuadTXGPIO_PadDDown	= PlatformGPIO_PTD3, // Rev 1.0: D Pad header pins (DOWN to UP ) are reversed 
+	FQuadTXGPIO_PadDLeft	= PlatformGPIO_PTD2, // Rev 1.0: D Pad header pins (DOWN to UP ) are reversed 
 	
-	FQuadTXGPIO_PadDRight   = PlatformGPIO_PTD2,
-	FQuadTXGPIO_PadDUp		= PlatformGPIO_PTD3,
+	FQuadTXGPIO_PadDRight   = PlatformGPIO_PTC5, // Rev 1.0: D Pad header pins (DOWN to UP ) are reversed 
+	FQuadTXGPIO_PadDUp	    = PlatformGPIO_PTC4, // Rev 1.0: D Pad header pins (DOWN to UP ) are reversed 
 	FQuadTXGPIO_XBeeSleep   = PlatformGPIO_PTD4,
 	FQuadTXGPIO_PadCenter	= PlatformGPIO_PTD5,
 	FQuadTXGPIO_PadStart    = PlatformGPIO_PTD6,
@@ -42,10 +42,13 @@ typedef enum
 
 typedef enum 
 {
-	FQuadTXADC_PadLeftVert  = PlatformADC_ADC0,
-	FQuadTXADC_PadLeftHorz  = PlatformADC_ADC1,
-	FQuadTXADC_PadRightHorz = PlatformADC_ADC2,
-	FQuadTXADC_PadRightVert	= PlatformADC_ADC3,
+	FQuadTXADC_PadLeftVert     = PlatformADC_ADC0,
+	FQuadTXADC_PadLeftHorz     = PlatformADC_ADC1,
+	FQuadTXADC_PadRightHorz    = PlatformADC_ADC2,
+	FQuadTXADC_PadRightVert	   = PlatformADC_ADC3,
+	FQuadTXADC_PadLeftTrigger  = PlatformADC_ADC6,
+	FQuadTXADC_PadRightTrigger = PlatformADC_ADC7,
+	
 } FQuadTXADC_t;
 
 #endif /* PLATFORM_FQUADTX_H_ */

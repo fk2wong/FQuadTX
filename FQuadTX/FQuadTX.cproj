@@ -103,6 +103,7 @@
       <Value>../FQuadTX_Libs/FQuadTXPower</Value>
       <Value>../</Value>
       <Value>../FQuadTX_Libs/FQuadTXLED</Value>
+      <Value>../FQuadTX_Libs/FQuadTXPad</Value>
     </ListValues>
   </avrgcc.compiler.directories.IncludePaths>
   <avrgcc.compiler.optimization.level>Optimize (-O1)</avrgcc.compiler.optimization.level>
@@ -130,6 +131,12 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="FQuadTX_Libs\FQuadTXLogging\FQuadTXLogging.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="FQuadTX_Libs\FQuadTXPad\FQuadTXPad.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="FQuadTX_Libs\FQuadTXPad\FQuadTXPad.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="FQuadTX_Libs\FQuadTXPower\FQuadTXPower.c">
@@ -213,6 +220,7 @@
     <Folder Include="FQuadTX_Libs\FQuadTXLogging" />
     <Folder Include="FQuadTX_Libs\FQuadTXPower" />
     <Folder Include="FQuadTX_Libs\FQuadTXLED" />
+    <Folder Include="FQuadTX_Libs\FQuadTXPad" />
     <Folder Include="Platform\PlatformI2C" />
     <Folder Include="Platform\PlatformPWM" />
     <Folder Include="Platform\PlatformADC" />
