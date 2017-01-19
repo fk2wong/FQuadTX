@@ -12,6 +12,7 @@
 #include "PlatformInterrupt.h"
 #include "PlatformPowerSave.h"
 #include "PlatformClock.h"
+#include "PlatformTimer.h"
 #include "PlatformGPIO.h"
 #include "PlatformRingBuffer.h"
 #include "PlatformUART.h"

@@ -20,6 +20,9 @@ int main( void )
 {
 	FStatus status;
 	bool isButtonPressed; // TEMP
+	uint64_t oldTime;
+	uint64_t newTime;
+	bool shouldResetOnNextPress = true;
 	
 	// Initialize power
 	status = FQuadTXPower_Init();
@@ -41,26 +44,62 @@ int main( void )
 	status = FQuadTXPad_Init();
 	require_noerr( status, exit );
 	
+	// TEMP
+	status = PlatformTimer_Init();
+	require_noerr( status, exit );
+	
+	status = PlatformTimer_Reset();
+	require_noerr( status, exit );
+	
+	status = PlatformTimer_GetTime( &oldTime );
+	require_noerr( status, exit );
+	
 	while(1)
 	{
-		_delay_ms( 200 );
-				
-		
-		// TEMP turning off power
-		status = FQuadTXPad_ReadButtonState( FQuadTXPadButton_Start, &isButtonPressed );
+		status = PlatformTimer_GetTime( &newTime );
 		require_noerr( status, exit );
 		
-		if ( isButtonPressed )
+
+		
+		// 		_delay_ms( 200 );
+		//
+		//
+		// TEMP turning off power
+		status = FQuadTXPad_ReadButtonState( FQuadTXPadButton_Center, &isButtonPressed );
+		require_noerr( status, exit );
+		
+		if ( !isButtonPressed )
 		{
-			status = FQuadTXPower_Release();
+			PlatformTimer_Reset();
+			shouldResetOnNextPress = true;
+		}
+		else
+		{
+			if ( shouldResetOnNextPress )
+			{
+				status = PlatformTimer_GetTime( &oldTime );
+				require_noerr( status, exit );
+				shouldResetOnNextPress = false;
+			}
+			
+			status = PlatformTimer_GetTime( &newTime );
 			require_noerr( status, exit );
-		}	
+			
+			if (( newTime - oldTime ) > 2000 )
+			{
+				status = FQuadTXPower_Release();
+				require_noerr( status, exit );
+				
+				status = FQuadTXLED_Off();
+				require_noerr( status, exit );
+			}
+		}
 	}
 	
 exit:
 	while ( 1 )
 	{
 		FQuadTXLED_Toggle();
-		_delay_ms( 40 );
+		_delay_ms( 100 );
 	}
 }
