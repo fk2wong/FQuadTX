@@ -11,7 +11,6 @@
 #include "require_macros.h"
 #include "FQuadTXPower.h"
 #include "FQuadTXLED.h"
-#include "FQuadTXPad.h"
 #include <util/delay.h>
 #include <stdlib.h>
 #include <avr/io.h>
@@ -28,17 +27,13 @@ int main( void )
 	status = FQuadTXPower_Hold();
 	require_noerr( status, exit );
 	
-	// Initialize buttons, joysticks and triggers
-	status = FQuadTXPad_Init();
-	require_noerr( status, exit );
-	
 	while(1)
-	{
+	{	
+		//_delay_ms( 200 );
 		
-		status = FQuadTXPower_CheckPowerOffRequest();	
+		// Power off if the user has requested
+		status = FQuadTXPower_CheckPowerOffRequest();
 		require_noerr( status, exit );
-		
-		// 		_delay_ms( 200 );
 	}
 	
 exit:

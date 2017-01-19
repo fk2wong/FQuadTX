@@ -116,6 +116,8 @@ FStatus FQuadTXPad_Init()
 	platformStatus |= PlatformADC_Init( FQuadTXADC_PadLeftTrigger );
 	platformStatus |= PlatformADC_Init( FQuadTXADC_PadRightTrigger );
 	
+	mIsPadInitialized = true;
+	
 	status = ( platformStatus == PlatformStatus_Success ) ? FStatus_Success : FStatus_Failed;
 exit:
 	return status;

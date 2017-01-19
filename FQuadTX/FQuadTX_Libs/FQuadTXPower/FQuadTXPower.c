@@ -86,7 +86,6 @@ exit:
 FStatus FQuadTXPower_CheckPowerOffRequest()
 {
 	FStatus status = FStatus_Failed;
-	PlatformStatus platformStatus;
 	uint64_t currentTime;
 	bool isButtonPressed;
 	
@@ -123,10 +122,6 @@ FStatus FQuadTXPower_CheckPowerOffRequest()
 			require_noerr( status, exit );
 		}
 	}
-		
-	// Release power hold, which will turn this MCU off when the user releases the on button
-	platformStatus = PlatformGPIO_OutputLow( FQuadTXGPIO_PowerHold );
-	require_noerr( platformStatus, exit );
 		
 	status = FStatus_Success;
 exit:
