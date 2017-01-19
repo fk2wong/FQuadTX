@@ -191,6 +191,12 @@
     <Compile Include="Platform\PlatformRingBuffer\PlatformRingBuffer.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="Platform\PlatformTimer\PlatformTimer.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Platform\PlatformTimer\PlatformTimer.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="Platform\PlatformUART\PlatformUART.c">
       <SubType>compile</SubType>
     </Compile>
@@ -222,6 +228,7 @@
     <Folder Include="FQuadTX_Libs\FQuadTXPower" />
     <Folder Include="FQuadTX_Libs\FQuadTXLED" />
     <Folder Include="FQuadTX_Libs\FQuadTXPad" />
+    <Folder Include="Platform\PlatformTimer" />
     <Folder Include="Platform\PlatformI2C" />
     <Folder Include="Platform\PlatformPWM" />
     <Folder Include="Platform\PlatformADC" />

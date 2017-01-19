@@ -19,7 +19,6 @@
 int main( void )
 {
 	FStatus status;
-	PlatformTimer_Init();
 	
 	// Initialize power
 	status = FQuadTXPower_Init();
