@@ -84,6 +84,8 @@ static FQuadTXPad_ButtonMapUnit_t mButtonMapList[PAD_NUM_BUTTONS] =
 		.GPIO = FQuadTXGPIO_PadDLeft,
 	},
 };
+
+static bool mIsPadInitialized;
 	
 
 // Static Functions
@@ -92,8 +94,11 @@ static int8_t _FQuadTXPad_ConvertRawToSignedPercentage( const uint16_t inRawValu
 
 FStatus FQuadTXPad_Init()
 {	
+	FStatus status = FStatus_Failed;
 	// Set platform status to 0, the error will be accumulated on top
 	PlatformStatus platformStatus = 0;
+	
+	require_action( !mIsPadInitialized, exit, status = FStatus_AlreadyInitialized );
 	
 	// Configure each button as input pull up, accumulate the error
 	for ( uint8_t i = 0; i < PAD_NUM_BUTTONS; i++ )
@@ -111,7 +116,11 @@ FStatus FQuadTXPad_Init()
 	platformStatus |= PlatformADC_Init( FQuadTXADC_PadLeftTrigger );
 	platformStatus |= PlatformADC_Init( FQuadTXADC_PadRightTrigger );
 	
-	return ( platformStatus == PlatformStatus_Success ) ? FStatus_Success : FStatus_Failed;
+	mIsPadInitialized = true;
+	
+	status = ( platformStatus == PlatformStatus_Success ) ? FStatus_Success : FStatus_Failed;
+exit:
+	return status;
 }
 
 FStatus FQuadTXPad_ReadButtonState( const FQuadTXPadButton inButton, bool* const outIsButtonPressed )
@@ -121,6 +130,7 @@ FStatus FQuadTXPad_ReadButtonState( const FQuadTXPadButton inButton, bool* const
 	bool buttonState;
 	
 	require( outIsButtonPressed, exit );
+	require_action( mIsPadInitialized, exit, status = FStatus_NotInitialized );
 	
 	// Loop through button list and find the corresponding GPIO
 	for ( uint8_t i = 0; i < PAD_NUM_BUTTONS; i++ )
@@ -145,11 +155,11 @@ FStatus FQuadTXPad_ReadAllButtonStates( uint16_t* const outButtonsPressed )
 	
 	// Set platform status to 0, the error will be accumulated on top
 	PlatformStatus platformStatus = 0;
-	
 	bool buttonState;
 	uint16_t buttonsPressedField = 0;
 	
 	require( outButtonsPressed, exit );
+	require_action( mIsPadInitialized, exit, status = FStatus_NotInitialized );
 	
 	// Get all button presses into a list, and accumulate the error
 	for ( uint8_t i = 0; i < PAD_NUM_BUTTONS; i++ )
@@ -176,8 +186,10 @@ FStatus FQuadTXPad_GetJoystickValues( int8_t* const outLeftVert, int8_t* const o
 	PlatformStatus platformStatus = 0; // Set to 0 first, in order to accumulate error
 	uint16_t rawADCValue;
 	
+	require_action( mIsPadInitialized, exit, status = FStatus_NotInitialized );
+	
 	// At least one joystick must be specified
-	require( outLeftVert || outLeftHorz || outRightVert || outRightHorz , exit );
+	require( outLeftVert || outLeftHorz || outRightVert || outRightHorz, exit );
 	
 	// Read the ADCs and map them into signed percentages
 	if ( outLeftVert )
@@ -218,6 +230,7 @@ FStatus FQuadTXPad_GetTriggerValues( uint8_t* const outLeftTrigger, uint8_t* con
 	
 	// At least one trigger must be specified
 	require( outLeftTrigger || outRightTrigger, exit );
+	require_action( mIsPadInitialized, exit, platformStatus = PlatformStatus_NotInitialized );
 	
 	// Read the ADCs and map them into percentages
 	if ( outLeftTrigger )

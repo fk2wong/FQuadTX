@@ -17,5 +17,7 @@ FStatus FQuadTXPower_Hold();
 
 FStatus FQuadTXPower_Release();
 
+FStatus FQuadTXPower_CheckPowerOffRequest();
+
 
 #endif /* FQUADTXPOWER_H_ */
