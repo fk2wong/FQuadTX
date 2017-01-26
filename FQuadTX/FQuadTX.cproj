@@ -107,6 +107,7 @@
       <Value>../Platform/PlatformTimer</Value>
       <Value>../Shared/FQuadComms</Value>
       <Value>../Shared/FQuadDefs</Value>
+      <Value>../Shared/FQuadRF</Value>
     </ListValues>
   </avrgcc.compiler.directories.IncludePaths>
   <avrgcc.compiler.optimization.level>Optimize (-O1)</avrgcc.compiler.optimization.level>
@@ -223,6 +224,12 @@
     <Compile Include="Shared\FQuadDefs\FQuadDefs.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="Shared\FQuadRF\FQuadRF.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Shared\FQuadRF\FQuadRF.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="Shared\FStatus\FStatus.h">
       <SubType>compile</SubType>
     </Compile>
@@ -257,6 +264,7 @@
     <Folder Include="Shared\FStatus" />
     <Folder Include="Shared\FQuadComms" />
     <Folder Include="Shared\FQuadDefs" />
+    <Folder Include="Shared\FQuadRF" />
     <Folder Include="Shared\require_macros" />
   </ItemGroup>
   <Import Project="$(AVRSTUDIO_EXE_PATH)\\Vs\\Compiler.targets" />
