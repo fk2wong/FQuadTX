@@ -14,8 +14,8 @@
 
 #define FQUADTX_POWER_RELEASE_REQUEST_WAIT_MS ( 2000 )
 
-static uint64_t mLastPressedTime;
-static uint64_t mShouldResetTimerOnNextPress;
+static uint32_t mLastPressedTime;
+static uint32_t mShouldResetTimerOnNextPress;
 
 FStatus FQuadTXPower_Init()
 {
@@ -86,7 +86,7 @@ exit:
 FStatus FQuadTXPower_CheckPowerOffRequest()
 {
 	FStatus status = FStatus_Failed;
-	uint64_t currentTime;
+	uint32_t currentTime;
 	bool isButtonPressed;
 	
 	status = FQuadTXPad_ReadButtonState( FQuadTXPadButton_Center, &isButtonPressed );
