@@ -11,6 +11,7 @@
 #include "require_macros.h"
 #include "FQuadTXPower.h"
 #include "FQuadTXLED.h"
+#include "FQuadComms.h"
 #include <util/delay.h>
 #include <stdlib.h>
 #include <avr/io.h>
@@ -27,13 +28,22 @@ int main( void )
 	status = FQuadTXPower_Hold();
 	require_noerr( status, exit );
 	
+	// Initialize comms
+	status = FQuadComms_Init( FQuadTXGPIO_XBeeSleep );
+	require_noerr( status, exit );
+	
+	
 	while(1)
 	{	
-		//_delay_ms( 200 );
+		_delay_ms( 1000 );
 		
 		// Power off if the user has requested
 		status = FQuadTXPower_CheckPowerOffRequest();
 		require_noerr( status, exit );
+		
+		FQuadTXLED_Toggle();
+		_delay_ms( 50 );
+		FQuadTXLED_Toggle();
 	}
 	
 exit:

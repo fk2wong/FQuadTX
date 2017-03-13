@@ -9,18 +9,18 @@
 #include "Platform_FQuadTX.h"
 #include "FQuadTXLogging.h"
 
-#define PAD_LEFT_VERT_MIN     ( 110 )
-#define PAD_LEFT_VERT_MID     ( 512 )
-#define PAD_LEFT_VERT_MAX     ( 945 )
-#define PAD_LEFT_HORZ_MIN     ( 65 )
+#define PAD_LEFT_VERT_MIN     ( 80 ) //110
+#define PAD_LEFT_VERT_MID     ( 508 )
+#define PAD_LEFT_VERT_MAX     ( 996 ) //945
+#define PAD_LEFT_HORZ_MIN     ( 32 )  //65
 #define PAD_LEFT_HORZ_MID     ( 512 )
 #define PAD_LEFT_HORZ_MAX     ( 960 )
 #define PAD_RIGHT_VERT_MIN    ( 130 ) // unused (NC)
 #define PAD_RIGHT_VERT_MID    ( 512 ) // unused (NC)
 #define PAD_RIGHT_VERT_MAX    ( 920 ) // unused (NC)
-#define PAD_RIGHT_HORZ_MIN    ( 75 )
+#define PAD_RIGHT_HORZ_MIN    ( 112 ) //75
 #define PAD_RIGHT_HORZ_MID    ( 510 )
-#define PAD_RIGHT_HORZ_MAX    ( 895 )
+#define PAD_RIGHT_HORZ_MAX    ( 900 )
 
 #define PAD_LEFT_TRIGGER_MIN  ( 210 )
 #define PAD_LEFT_TRIGGER_MAX  ( 920 )
