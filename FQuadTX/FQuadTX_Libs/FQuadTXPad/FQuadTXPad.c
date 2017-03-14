@@ -203,17 +203,17 @@ FStatus FQuadTXPad_GetJoystickValues( int8_t* const outLeftVert, int8_t* const o
 		platformStatus |= PlatformADC_Read( FQuadTXADC_PadLeftHorz, &rawADCValue );
 		*outLeftHorz = _FQuadTXPad_ConvertRawToSignedPercentage( rawADCValue, PAD_LEFT_HORZ_MID, PAD_LEFT_HORZ_MIN, PAD_LEFT_HORZ_MAX );
 	}
-	
+	// Right sticks need to be sign flipped
 	if ( outRightVert )
 	{
 		platformStatus |= PlatformADC_Read( FQuadTXADC_PadRightVert, &rawADCValue );
-		*outRightVert = _FQuadTXPad_ConvertRawToSignedPercentage( rawADCValue, PAD_RIGHT_VERT_MID, PAD_RIGHT_VERT_MIN, PAD_RIGHT_VERT_MAX );
+		*outRightVert = -1 * _FQuadTXPad_ConvertRawToSignedPercentage( rawADCValue, PAD_RIGHT_VERT_MID, PAD_RIGHT_VERT_MIN, PAD_RIGHT_VERT_MAX );
 	}
 	
 	if ( outRightHorz )
 	{
 		platformStatus |= PlatformADC_Read( FQuadTXADC_PadRightHorz, &rawADCValue );
-		*outRightHorz = _FQuadTXPad_ConvertRawToSignedPercentage( rawADCValue, PAD_RIGHT_HORZ_MID, PAD_RIGHT_HORZ_MIN, PAD_RIGHT_HORZ_MAX );
+		*outRightHorz = -1 * _FQuadTXPad_ConvertRawToSignedPercentage( rawADCValue, PAD_RIGHT_HORZ_MID, PAD_RIGHT_HORZ_MIN, PAD_RIGHT_HORZ_MAX );
 	}
 	
 	// Check accumulated error

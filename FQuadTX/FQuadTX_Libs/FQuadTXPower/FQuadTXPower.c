@@ -11,8 +11,14 @@
 #include "FQuadTXLogging.h"
 #include "Platform_FQuadTX.h"
 #include <stdbool.h>
+#include <util/delay.h>
 
 #define FQUADTX_POWER_RELEASE_REQUEST_WAIT_MS ( 2000 )
+#define FQUADTXPOWER_NEVER_RETURN()  do \
+                                    { \
+										_delay_ms( 100 ); \
+									}\
+                                    while(1);
 
 static uint32_t mLastPressedTime;
 static uint32_t mShouldResetTimerOnNextPress;
@@ -78,6 +84,9 @@ FStatus FQuadTXPower_Release()
 	platformStatus = PlatformGPIO_OutputLow( FQuadTXGPIO_PowerHold );
 	require_noerr( platformStatus, exit );
 		
+	// Stop execution
+	FQUADTXPOWER_NEVER_RETURN();	
+	
 	status = FStatus_Success;
 exit:
 	return status;
@@ -112,13 +121,13 @@ FStatus FQuadTXPower_CheckPowerOffRequest()
 		require_noerr( status, exit );
 		
 		if (( currentTime - mLastPressedTime ) > FQUADTX_POWER_RELEASE_REQUEST_WAIT_MS )
-		{
-			// Release the power line
-			status = FQuadTXPower_Release();
-			require_noerr( status, exit );
-			
+		{	
 			// Turn off the LED to indicate the system is shutting down
 			status = FQuadTXLED_Off();
+			require_noerr( status, exit );
+						
+			// Release the power line, don't return
+			status = FQuadTXPower_Release();
 			require_noerr( status, exit );
 		}
 	}
