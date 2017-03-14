@@ -21,11 +21,16 @@
 #define LED_FLASH_PERIOD_MS ( 500 )
 #define NUM_LOOPS_PER_TOGGLE ( LED_FLASH_PERIOD_MS / LOOP_PERIOD_MS )
 
+#define FQUADTX_SHUTDOWN_TIMER_MS ( 30000 ) // 30 seconds
+
 int main( void )
 {
 	FStatus status;
 	
 	uint32_t loopCount = 0;
+	
+	uint32_t lastConnectionTime;
+	uint32_t currentTime;
 	
 	FQuadAxisValue pitch;
 	FQuadAxisValue roll;
@@ -46,6 +51,11 @@ int main( void )
 	
 	// Initialize controls
 	status = FQuadTXControls_Init();
+	require_noerr( status, exit );
+	
+	// Initialize the last connection time to now. 
+	// If the time since the last connection exceeds FQUADTX_SHUTDOWN_TIMER_MS, the system will shut down to save battery.
+	status = PlatformTimer_GetTime( &lastConnectionTime );
 	require_noerr( status, exit );
 	
 	while(1)
@@ -73,6 +83,10 @@ int main( void )
 			// Flash LED once to show that we're still doing something
 			if ( loopCount % NUM_LOOPS_PER_TOGGLE == 0 )
 			FQuadTXLED_Toggle();
+			
+			// Update the last connection time
+			status = PlatformTimer_GetTime( &lastConnectionTime );
+			require_noerr( status, exit );
 		}
 		
 		// TODO: Low RSSI check
@@ -80,6 +94,19 @@ int main( void )
 		// Power off if the user has requested
 		status = FQuadTXPower_CheckPowerOffRequest();
 		require_noerr( status, exit );
+		
+		// Get the current time
+		status = PlatformTimer_GetTime( &currentTime );
+		require_noerr( status, exit );
+		
+		// If the controller has not connected to the quadcopter for FQUADTX_SHUTDOWN_TIMER_MS,
+		// then assume the controller has been accidentally turned on, or the user forgot to turn off the controller, so shutdown.
+		if (( currentTime - lastConnectionTime ) > FQUADTX_SHUTDOWN_TIMER_MS )
+		{
+			// Goodnight
+			status = FQuadTXPower_Release();
+			require_noerr( status, exit );	
+		}
 		
 		loopCount++;
 	}
