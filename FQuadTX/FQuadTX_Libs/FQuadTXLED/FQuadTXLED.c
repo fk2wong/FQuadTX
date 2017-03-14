@@ -9,6 +9,7 @@
 #include "require_macros.h"
 #include "PlatformStatus.h"
 #include "Platform_FQuadTX.h"
+#include <util/delay.h>
 
 FStatus FQuadTXLED_Init()
 {
@@ -35,5 +36,21 @@ FStatus FQuadTXLED_Toggle()
 {
 	PlatformStatus platformStatus = PlatformGPIO_Toggle( FQuadTXGPIO_GreenLED );
 
+	return ( platformStatus == PlatformStatus_Success ) ? FStatus_Success : FStatus_Failed;
+}
+
+FStatus FQuadTXLED_Flash( uint8_t inCycles )
+{
+	PlatformStatus platformStatus = FStatus_Success;
+	
+	for ( uint8_t i = 0; i < inCycles; i++ )
+	{
+		platformStatus |= PlatformGPIO_Toggle( FQuadTXGPIO_GreenLED );
+		_delay_ms( 25 );
+		
+		platformStatus |= PlatformGPIO_Toggle( FQuadTXGPIO_GreenLED );
+		_delay_ms( 25 );
+	}
+	
 	return ( platformStatus == PlatformStatus_Success ) ? FStatus_Success : FStatus_Failed;
 }

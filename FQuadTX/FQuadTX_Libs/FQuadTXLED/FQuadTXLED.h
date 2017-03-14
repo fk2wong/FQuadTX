@@ -39,5 +39,14 @@ FStatus FQuadTXLED_Off();
  */
 FStatus FQuadTXLED_Toggle();
 
+/*!
+ * \brief   Flashes the LED.
+ *
+ * \param    inNumCycles - Number of cycles to flash the LED. Each cycle takes 50ms.
+ *
+ * \return  FStatus_Success if successful, FStatus_Failed otherwise.
+ */
+FStatus FQuadTXLED_Flash( uint8_t inNumCycles );
+
 
 #endif /* FQUADTXLED_H_ */

@@ -119,6 +119,7 @@
       <Value>../Shared/FQuadComms</Value>
       <Value>../Shared/FQuadDefs</Value>
       <Value>../Shared/FQuadRF</Value>
+      <Value>../FQuadTX_Libs/FQuadTXControls</Value>
     </ListValues>
   </avrgcc.compiler.directories.IncludePaths>
   <avrgcc.compiler.optimization.level>Optimize (-O1)</avrgcc.compiler.optimization.level>
@@ -138,6 +139,12 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="FQuadTX.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="FQuadTX_Libs\FQuadTXControls\FQuadTXControls.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="FQuadTX_Libs\FQuadTXControls\FQuadTXControls.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="FQuadTX_Libs\FQuadTXLED\FQuadTXLED.c">
@@ -258,6 +265,7 @@
     <Folder Include="FQuadTX_Libs\FQuadTXPower" />
     <Folder Include="FQuadTX_Libs\FQuadTXLED" />
     <Folder Include="FQuadTX_Libs\FQuadTXPad" />
+    <Folder Include="FQuadTX_Libs\FQuadTXControls" />
     <Folder Include="Platform\PlatformTimer" />
     <Folder Include="Platform\PlatformI2C" />
     <Folder Include="Platform\PlatformPWM" />
