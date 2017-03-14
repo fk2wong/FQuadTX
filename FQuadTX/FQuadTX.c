@@ -18,10 +18,14 @@
 #include <avr/io.h>
 
 #define LOOP_PERIOD_MS ( 100 )
+#define LED_FLASH_PERIOD_MS ( 500 )
+#define NUM_LOOPS_PER_TOGGLE ( LED_FLASH_PERIOD_MS / LOOP_PERIOD_MS )
 
 int main( void )
 {
 	FStatus status;
+	
+	uint32_t loopCount = 0;
 	
 	FQuadAxisValue pitch;
 	FQuadAxisValue roll;
@@ -44,9 +48,6 @@ int main( void )
 	status = FQuadTXControls_Init();
 	require_noerr( status, exit );
 	
-	//status = FQuadComms_EstablishConnection();
-	//require_noerr( status, exit );
-	
 	while(1)
 	{	
 		_delay_ms( LOOP_PERIOD_MS );
@@ -62,19 +63,25 @@ int main( void )
 		// Send the updated controls
 		status = FQuadComms_SendControls( pitch, roll, yaw, thrust );
 		
-		// If the send failed, then conn
+		// If the send timed out, then flash the LED quickly
 		if ( status == FStatus_Timeout )
 		{
 			FQuadTXLED_Flash( 5 );
 		}
+		else
+		{
+			// Flash LED once to show that we're still doing something
+			if ( loopCount % NUM_LOOPS_PER_TOGGLE == 0 )
+			FQuadTXLED_Toggle();
+		}
+		
+		// TODO: Low RSSI check
 		
 		// Power off if the user has requested
 		status = FQuadTXPower_CheckPowerOffRequest();
 		require_noerr( status, exit );
 		
-		FQuadTXLED_Toggle();
-		_delay_ms( 50 );
-		FQuadTXLED_Toggle();
+		loopCount++;
 	}
 	
 exit:

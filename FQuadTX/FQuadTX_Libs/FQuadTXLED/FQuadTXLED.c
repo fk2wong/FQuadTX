@@ -46,10 +46,10 @@ FStatus FQuadTXLED_Flash( uint8_t inCycles )
 	for ( uint8_t i = 0; i < inCycles; i++ )
 	{
 		platformStatus |= PlatformGPIO_Toggle( FQuadTXGPIO_GreenLED );
-		_delay_ms( 25 );
+		_delay_ms( 50 );
 		
 		platformStatus |= PlatformGPIO_Toggle( FQuadTXGPIO_GreenLED );
-		_delay_ms( 25 );
+		_delay_ms( 50 );
 	}
 	
 	return ( platformStatus == PlatformStatus_Success ) ? FStatus_Success : FStatus_Failed;
